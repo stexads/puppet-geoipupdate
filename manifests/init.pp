@@ -8,5 +8,5 @@ class geoipupdate (
   String		$license_key,
   Array[String]	$edition_ids,
 ) {
-  notice { "======= Welcome to puppet-geoipupdate": }
+  notify { "======= Welcome to puppet-geoipupdate": }
 }
