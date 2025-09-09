@@ -3,18 +3,16 @@
 #
 
 class geoipupdate (
-  String		$account_id,
-  String		$license_key,
+  String        $account_id,
+  String        $license_key,
   Array[String]	$edition_ids,
+  String        $package_ensure,
+  String        $package_name,
 ) {
-  notify { "======= Welcome to puppet-geoipupdate": }
 
-  notify { "The environment is ${$environment}": }
-  notify { "The module_name is ${module_name}": }
+  include geoipupdate::install
+  include geoipupdate::config
 
-  file { '/etc/GeoIP.conf':
-    ensure  => file,
-    content => template("${module_name}/GeoIP.conf.erb"),
-  }
+  notify { "=== Welcome to ${module_name} ===": }
 
 }
