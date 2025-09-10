@@ -2,9 +2,13 @@
 #  Private class for 'geoipupdate' install
 #
 
-class geoipupdate::install {
-  $package_ensure = $geoipupdate::package_ensure
-  $package_name   = $geoipupdate::package_name
+class geoipupdate::install (
+  $package_ensure = $geoipupdate::package_ensure,
+  $package_name   = $geoipupdate::package_name,
+  $systemd_timer  = $geoipupdate::systemd_timer
+) {
+
+  notify { "=== Welcome to ${module_name}::install ===": }
 
   $_package_ensure = $package_ensure ? {
     true     => 'present',
