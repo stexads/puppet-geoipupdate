@@ -1,0 +1,11 @@
+[Unit]
+Description=Timer required by geoipupdate-update.service.erb
+Requires=geoipupdate-update.service
+
+[Timer]
+Unit=geoipupdate-update.service
+OnCalendar=<%= @timer_oncalendar %>
+RandomizedDelaySec=30s
+
+[Install]
+WantedBy=timers.target

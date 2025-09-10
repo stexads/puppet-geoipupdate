@@ -3,9 +3,10 @@
 #
 
 class geoipupdate::install (
-  $package_ensure = $geoipupdate::package_ensure,
-  $package_name   = $geoipupdate::package_name,
-  $systemd_timer  = $geoipupdate::systemd_timer
+  $package_ensure     = $geoipupdate::package_ensure,
+  $package_name       = $geoipupdate::package_name,
+  $service_update_cmd = $geoipupdate::service_update_cmd,
+  $timer_oncalendar   = $geoipupdate::timer_oncalendar,
 ) {
 
   notify { "=== Welcome to ${module_name}::install ===": }

@@ -1,0 +1,13 @@
+# Service that updates MaxMind's 'geoipupdate' client
+
+[Unit]
+Description=Updates 'geoipupdate' client
+Wants=geoipupdate-update.timer
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=<%= @service_update_cmd %>
+
+[Install]
+WantedBy=multi-user.target

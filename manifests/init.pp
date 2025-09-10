@@ -10,7 +10,8 @@ class geoipupdate (
   Array[String]      $edition_ids,
   String             $package_ensure,
   String             $package_name,
-  Optional[Boolean]  $systemd_timer,
+  String             $service_update_cmd,
+  String             $timer_oncalendar,
 ) {
 
   contain geoipupdate::install
