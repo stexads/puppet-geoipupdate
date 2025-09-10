@@ -21,15 +21,15 @@ and configuration.
 ## What puppet-geoipupdate affects
 None.
 
-## Setup requirements
-None.
+## Requirements
+This module depends on the following modules:
+- puppet-systemd
+- puppetlabs-stdlib
 
 ## Beginning with puppet-geoipupdate
 TODO
 
 # Usage
-You can manage all interaction with MaxMind's geoipupdate client through the
-main `geoipupdate` class.
 TODO
 
 # Limitations

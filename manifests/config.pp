@@ -12,8 +12,6 @@ class geoipupdate::config (
   $timer_oncalendar   = $geoipupdate::timer_oncalendar,
 ) {
 
-  notify { "=== Welcome to ${module_name}::config ===": }
-
   file { '/etc/GeoIP.conf':
     ensure  => $package_ensure,
     content => template("${module_name}/GeoIP.conf.erb"),

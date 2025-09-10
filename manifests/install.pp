@@ -9,8 +9,6 @@ class geoipupdate::install (
   $timer_oncalendar   = $geoipupdate::timer_oncalendar,
 ) {
 
-  notify { "=== Welcome to ${module_name}::install ===": }
-
   $_package_ensure = $package_ensure ? {
     true     => 'present',
     false    => 'purged',
