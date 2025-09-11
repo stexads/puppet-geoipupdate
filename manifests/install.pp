@@ -1,5 +1,5 @@
 #
-#  Private class for 'geoipupdate' install
+#  Private class for 'geoipupdate' package installation
 #
 
 class geoipupdate::install (
@@ -8,19 +8,13 @@ class geoipupdate::install (
   $service_update_cmd = $geoipupdate::service_update_cmd,
   $timer_oncalendar   = $geoipupdate::timer_oncalendar,
 ) {
-
-  $_package_ensure = $package_ensure ? {
-    true     => 'present',
-    false    => 'purged',
-    'absent' => 'purged',
-    default  => $package_ensure,
-  }
+#  private()
 
   # Not sure if os family check is needed...
   case $facts['os']['family'] {
     'RedHat': {
       package { 'geoipupdate':
-        ensure => $_package_ensure,
+        ensure => $package_ensure,
         name   => $package_name,
       }
     }

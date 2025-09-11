@@ -14,8 +14,10 @@ class geoipupdate (
 
   contain geoipupdate::install
   contain geoipupdate::config
+  contain geoipupdate::service
 
   Class['geoipupdate::install']
   -> Class['geoipupdate::config']
+  -> Class['geoipupdate::service']
 
 }

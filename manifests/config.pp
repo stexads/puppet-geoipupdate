@@ -1,5 +1,5 @@
 #
-# Private class related to configuring 'geoipupdate'
+# Private class for configuring 'geoipupdate' config file
 #
 
 class geoipupdate::config (
@@ -8,27 +8,27 @@ class geoipupdate::config (
   $edition_ids        = $geoipupdate::edition_ids,
   $package_ensure     = $geoipupdate::package_ensure,
   $package_name       = $geoipupdate::package_name,
-  $service_update_cmd = $geoipupdate::service_update_cmd,
-  $timer_oncalendar   = $geoipupdate::timer_oncalendar,
 ) {
+#  private()
+
+  # file_ensure expects Enum['present', 'absent', 'file', 'directory', 'link']
+  # while package_ensure expects
+  # Enum['present', 'absent', 'purged', 'disabled', 'installed', 'latest']
+
+
+  $file_ensure = $package_ensure ? {
+    'purged'    => 'absent',
+    'disabled'  => 'absent',
+    'installed' => 'present',
+    'latest'    => 'present',
+    default     => $package_ensure,
+  }
+
 
   file { '/etc/GeoIP.conf':
-    ensure  => $package_ensure,
+    ensure  => $file_ensure,
     content => template("${module_name}/GeoIP.conf.erb"),
-    require => Package['geoipupdate'],
+    require => Package["${package_name}"],
   }
-
-  systemd::timer { 'geoipupdate-update.timer':
-    #timer_content   => $_timer,
-    timer_content => template("${module_name}/geoipupdate-update.timer.erb"),
-    service_content => template("${module_name}/geoipupdate-update.service.erb"),
-  }
-
-  service { 'geoipupdate-update.timer':
-    ensure    => running,
-    subscribe => Systemd::Timer['geoipupdate-update.timer'],
-  }
-
-
 
 }
