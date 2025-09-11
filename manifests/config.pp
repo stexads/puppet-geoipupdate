@@ -8,25 +8,12 @@ class geoipupdate::config (
   $edition_ids        = $geoipupdate::edition_ids,
   $package_ensure     = $geoipupdate::package_ensure,
   $package_name       = $geoipupdate::package_name,
+  $p_file_ensure      = undef,
 ) {
-#  private()
-
-  # file_ensure expects Enum['present', 'absent', 'file', 'directory', 'link']
-  # while package_ensure expects
-  # Enum['present', 'absent', 'purged', 'disabled', 'installed', 'latest']
-
-
-  $file_ensure = $package_ensure ? {
-    'purged'    => 'absent',
-    'disabled'  => 'absent',
-    'installed' => 'present',
-    'latest'    => 'present',
-    default     => $package_ensure,
-  }
-
+  assert_private()
 
   file { '/etc/GeoIP.conf':
-    ensure  => $file_ensure,
+    ensure  => $p_file_ensure,
     content => template("${module_name}/GeoIP.conf.erb"),
     require => Package["${package_name}"],
   }

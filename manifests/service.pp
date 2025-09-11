@@ -6,31 +6,19 @@ class geoipupdate::service (
   $package_ensure     = $geoipupdate::package_ensure,
   $service_update_cmd = $geoipupdate::service_update_cmd,
   $timer_oncalendar   = $geoipupdate::timer_oncalendar,
+  $p_service_enable   = undef,
+  $p_timer_ensure     = undef,
 ) {
-
-  # timer_ensure expects Enum['absent', 'file', 'present']
-  # while package_ensure expects
-  # Enum['present', 'absent', 'purged', 'disabled', 'installed', 'latest']
-  $timer_ensure = $package_ensure ? {
-    'purged'    => 'absent',
-    'disabled'  => 'absent',
-    'installed' => 'present',
-    'latest'    => 'present',
-    default     => $package_ensure,
-  }
+  assert_private()
 
   systemd::timer { 'geoipupdate-update.timer':
-    ensure          => $timer_ensure,
+    ensure          => $p_timer_ensure,
     timer_content   => template("${module_name}/geoipupdate-update.timer.erb"),
     service_content => template("${module_name}/geoipupdate-update.service.erb"),
   }
 
   service { 'geoipupdate-update.timer':
-    enable          => $package_ensure ? {
-      'absent'      => false,
-      'purged'      => false,
-      default       => true,
-    },
+    enable          => $p_service_enable,
     subscribe       => Systemd::Timer['geoipupdate-update.timer'],
   }
 
