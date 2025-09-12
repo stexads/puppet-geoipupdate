@@ -20,16 +20,13 @@ class geoipupdate (
   String $service_update_cmd,
   String $timer_oncalendar,
 ) {
-  # package_ensure expects
-  # Enum['present', 'absent', 'purged', 'disabled', 'installed', 'latest']
-  # while file_ensure expects
-  # Enum['present', 'absent', 'file', 'directory', 'link']
+  # Treating 'disable' same as 'absent' for simplicity
   $p_package_ensure = $package_ensure ? {
     'disabled' => 'absent',
     default    => $package_ensure,
   }
 
-  # file_ensure expects
+  # package_ensure expects
   # Enum['present', 'absent', 'purged', 'disabled', 'installed', 'latest']
   # while file_ensure expects
   # Enum['present', 'absent', 'file', 'directory', 'link']
@@ -43,8 +40,8 @@ class geoipupdate (
 
   # package_ensure expects
   # Enum['present', 'absent', 'purged', 'disabled', 'installed', 'latest']
-  # while timer_ensure expects
-  # Enum['absent', 'file', 'present']
+  # while file_ensure expects
+  # Enum['present', 'absent', 'file', 'directory', 'link']
   $p_timer_ensure = $package_ensure ? {
     'purged'    => 'absent',
     'disabled'  => 'absent',
@@ -57,25 +54,37 @@ class geoipupdate (
   # Enum['present', 'absent', 'purged', 'disabled', 'installed', 'latest']
   # while service_enable expects
   # Enum['stopped', 'running', 'false', 'true' ]
-  $p_service_enable = $package_ensure ? {
-    'absent'         => false,
-    'disabled'       => false,
-    'purged'         => false,
-    default          => true,
+  $p_enable = $package_ensure ? {
+    'absent'   => false,
+    'disabled' => false,
+    'purged'   => false,
+    default    => true,
+  }
+
+  # package_ensure expects
+  # Enum['present', 'absent', 'purged', 'disabled', 'installed', 'latest']
+  # while service_running expects
+  # Enum['stopped', 'running', 'false', 'true' ]
+  $p_service_running = $package_ensure ? {
+    'absent'   => false,
+    'disabled' => false,
+    'purged'   => false,
+    default    => true,
   }
 
   # Pass 'correct' parameter to 'install' class
   class { 'geoipupdate::install':
-    p_package_ensure => $p_package_ensure,
+    p_package_ensure  => $p_package_ensure,
   }
   # Pass 'correct' parameter to 'config' class
   class { 'geoipupdate::config':
-    p_file_ensure    => $p_file_ensure,
+    p_file_ensure     => $p_file_ensure,
   }
   # Pass 'correct' parameters to 'service' class
   class { 'geoipupdate::service':
-    p_service_enable => $p_service_enable,
-    p_timer_ensure   => $p_timer_ensure,
+    p_timer_ensure    => $p_timer_ensure,
+    p_enable          => $p_enable,
+    p_service_running => $p_service_running,
   }
 
   Class['geoipupdate::install']
