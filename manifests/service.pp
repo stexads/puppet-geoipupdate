@@ -25,14 +25,14 @@ class geoipupdate::service (
     active          => $p_enable,
     timer_content   => template("${module_name}/geoipupdate-update.timer.erb"),
     service_content => template("${module_name}/geoipupdate-update.service.erb"),
-    notify  => Exec['systemd-daemon-reload'],
+    notify          => Exec['systemd-daemon-reload'],
   }
 
   service { 'geoipupdate-update.service':
-    enable    => $p_enable,
     ensure    => $p_service_running,
+    enable    => $p_enable,
     subscribe => Systemd::Timer['geoipupdate-update.timer'],
-    notify  => Exec['systemd-daemon-reload'],
+    notify    => Exec['systemd-daemon-reload'],
   }
 
   # Some testing showed issues with timer not finding service when deploying
