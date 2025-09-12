@@ -1,12 +1,12 @@
 {
-  "name": "puppet-geoipupdate",
-  "version": "0.9.1",
-  "author": "Stefano Longo",
+  "name": "stexads-geoipupdate",
+  "version": "0.9.2",
+  "author": "stexads",
   "summary": "Installs, configures and manages the MaxMind geoipupdate client",
   "license": "Apache-2.0",
-  "source": "https://github.com/stefano-exads/puppet-geoipupdate",
-  "project_page": "https://github.com/stefano-exads/puppet-geoipupdate",
-  "issues_url": "https://github.com/stefano-exads/puppet-geoipupdate/issues",
+  "source": "https://github.com/stexads/puppet-geoipupdate",
+  "project_page": "https://github.com/stexads/puppet-geoipupdate",
+  "issues_url": "https://github.com/stexads/puppet-geoipupdate/issues",
   "dependencies": [
 
   ],
