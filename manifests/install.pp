@@ -1,10 +1,14 @@
 #
-#  Private class for 'geoipupdate' package installation
+# @summary Private class for 'geoipupdate' package installation
 #
-
+# @package_ensure
+# @package_name
+#
+# @api private
+#
 class geoipupdate::install (
-  $p_package_ensure = undef,
-  $package_name     = $geoipupdate::package_name,
+  String $p_package_ensure = undef,
+  String $package_name     = $geoipupdate::package_name,
 ) {
   assert_private()
 

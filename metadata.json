@@ -2,19 +2,20 @@
   "name": "puppet-geoipupdate",
   "version": "0.9.1",
   "author": "Stefano Longo",
-  "license": "Apache-2.0",
   "summary": "Installs, configures and manages the MaxMind geoipupdate client",
-  "description": "puppet-geoipupdate module for RHEL.",
   "license": "Apache-2.0",
   "source": "https://github.com/stefano-exads/puppet-geoipupdate",
   "project_page": "https://github.com/stefano-exads/puppet-geoipupdate",
   "issues_url": "https://github.com/stefano-exads/puppet-geoipupdate/issues",
-  "dependencies": [],
+  "dependencies": [
+
+  ],
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "9", "10"
+        "9",
+        "10"
       ]
     }
   ],
@@ -31,5 +32,9 @@
       "name": "puppetlabs-stdlib",
       "version_requirement": ">= 9.7.0"
     }
-  ]
+  ],
+  "description": "puppet-geoipupdate module for RHEL.",
+  "pdk-version": "3.4.0",
+  "template-url": "pdk-default#3.4.0",
+  "template-ref": "tags/3.4.0-0-gd3cc13f"
 }

@@ -1,13 +1,20 @@
 #
-# Private class for configuring 'geoipupdate' systemd service & timer
+# @summary Private class for configuring 'geoipupdate' systemd service & timer
 #
-
+# @package_ensure
+# @service_update_cmd
+# @timer_oncalendar
+# @p_service_enable
+# @p_timer_ensure
+#
+# @api private
+#
 class geoipupdate::service (
-  $package_ensure     = $geoipupdate::package_ensure,
-  $service_update_cmd = $geoipupdate::service_update_cmd,
-  $timer_oncalendar   = $geoipupdate::timer_oncalendar,
-  $p_service_enable   = undef,
-  $p_timer_ensure     = undef,
+  String  $package_ensure     = $geoipupdate::package_ensure,
+  String  $service_update_cmd = $geoipupdate::service_update_cmd,
+  String  $timer_oncalendar   = $geoipupdate::timer_oncalendar,
+  Boolean $p_service_enable   = undef,
+  String  $p_timer_ensure     = undef,
 ) {
   assert_private()
 
@@ -18,8 +25,8 @@ class geoipupdate::service (
   }
 
   service { 'geoipupdate-update.timer':
-    enable          => $p_service_enable,
-    subscribe       => Systemd::Timer['geoipupdate-update.timer'],
+    enable    => $p_service_enable,
+    subscribe => Systemd::Timer['geoipupdate-update.timer'],
   }
 
 }

@@ -1,7 +1,16 @@
 #
-# Class geoipupdate
+# @summary Public class for installing, configuring and managing MaxMind's 'geoipupdate' client
 #
-
+# @account_id
+# @license_key
+# @edition_ids
+# @package_ensure
+# @package_name
+# @service_update_cmd
+# @timer_oncalendar
+#
+# @api public
+#
 class geoipupdate (
   String $account_id,
   String $license_key,
@@ -11,7 +20,6 @@ class geoipupdate (
   String $service_update_cmd,
   String $timer_oncalendar,
 ) {
-
   # package_ensure expects
   # Enum['present', 'absent', 'purged', 'disabled', 'installed', 'latest']
   # while file_ensure expects
