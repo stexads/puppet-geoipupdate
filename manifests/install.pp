@@ -12,13 +12,15 @@ class geoipupdate::install (
 ) {
   assert_private()
 
-  # Not sure if os family check is needed...
+  # Add more checks for other distros
   case $facts['os']['family'] {
-    'RedHat': {
+    'RedHat', 'Debian', 'Darwin': {
       package { 'geoipupdate':
         ensure => $p_package_ensure,
         name   => $package_name,
       }
+    }
+    'Debian': {
     }
     default: {
       notify { 'default':

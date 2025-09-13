@@ -6,6 +6,7 @@
 # @edition_ids
 # @package_ensure
 # @package_name
+# @conf_dir
 # @service_update_cmd
 # @timer_oncalendar
 #
@@ -16,7 +17,8 @@ class geoipupdate (
   String $license_key,
   String $edition_ids,
   String $package_ensure,
-  String $package_name,
+  String $package_name = 'geoipupdate',
+  String $conf_dir = '/usr/local/etc',
   String $service_update_cmd,
   String $timer_oncalendar,
 ) {
