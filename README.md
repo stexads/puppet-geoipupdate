@@ -64,6 +64,10 @@ Class nodes::mynode (
 }
 ```
 
+## Note
+The `conf_dir` parameter is optional. If not set, it will default to where
+MaxMind's `geoipupdate` client expects it: `/usr/local/etc`.
+
 
 # Limitations
 The module only manages the `geoipupdate` client.
