@@ -10,7 +10,7 @@
 1. [Limitations - OS compatibility, etc.](#Limitations)
    * [Caveats](#Caveats)
 1. [Development - Guide for contributing to the module](#Development)
-
+1. [README - Check here for latest version](#README)
 
 # Module description
 Very simple module to manage MaxMind's geoipupdate client.
@@ -83,3 +83,7 @@ the old config file.
 # Development
 Source code available at [GitHub](https://github.com/stexads/puppet-geoipupdate).
 Happy to receive pull-requests...
+
+
+# README
+[See GitHub for latest README](https://github.com/stexads/puppet-geoipupdate/blob/main/README.md)
