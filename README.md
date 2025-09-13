@@ -4,7 +4,7 @@
 #### Table of Contents
 1. [Module Description - What the module does and why it is useful](#Module%20description)
 1. [Setup - The basics of getting started with puppet-geoipupdate](#Setup)
-   * [What puppet-geoipupdate affects](#What%20puppet-geoipupdate%20affects)
+   * [What puppet-geoipupdate affects](#What-puppet-geoipupdate-affects)
    * [Requirements](#Requirements)
 1. [Usage - Configuration options and additional functionality](#Usage)
 1. [Limitations - OS compatibility, etc.](#Limitations)
