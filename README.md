@@ -42,6 +42,14 @@ This module depends on the following modules:
 
 
 # Usage
+## Parameters
+- package_ensure: Instructs the module to either install or remove the client
+- account_id: Your MaxMind's account ID
+- license_key: Your MaxMind's License Key
+- edition_ids: The mmdb file list
+- conf_dir: The destination directory for MaxMind's config file `GeoIP.conf`
+- timer_oncalendar: Setting within the `*.timer` unit file that defines a specific date and time for triggering the client update
+
 Example usage:
 ```yaml
 Class nodes::mynode (
@@ -51,13 +59,11 @@ Class nodes::mynode (
 #  include geoipupdate
 
   class { 'geoipupdate':
+    package_ensure     => 'present',
     account_id         => '123456',
     license_key        => 'abcdef',
     edition_ids        => 'GeoIP2-Country GeoIP2-City GeoIP2-ISP GeoIP2-Connection-Type',
-    package_ensure     => 'present',
-    package_name       => 'geoipupdate',
     conf_dir           => '/etc',
-    service_update_cmd => '/usr/bin/dnf -y update geoipupdate',
     timer_oncalendar   => 'Mon 00:00:00',
   }
 
@@ -66,7 +72,7 @@ Class nodes::mynode (
 
 ## Note
 The `conf_dir` parameter is optional. If not set, it will default to where
-MaxMind's `geoipupdate` client expects it: `/usr/local/etc`.
+MaxMind's `geoipupdate` client expects its configuration file: `/usr/local/etc`
 
 
 # Limitations

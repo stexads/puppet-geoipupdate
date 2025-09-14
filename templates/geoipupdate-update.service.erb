@@ -7,7 +7,7 @@ After=network.target
 
 [Service]
 Type=oneshot
-ExecStart=<%= @service_update_cmd %>
+ExecStart=<%= @p_update_cmd %>
 
 [Install]
 WantedBy=multi-user.target

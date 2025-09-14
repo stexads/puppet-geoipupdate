@@ -5,9 +5,7 @@
 # @license_key
 # @edition_ids
 # @package_ensure
-# @package_name
 # @conf_dir
-# @service_update_cmd
 # @timer_oncalendar
 #
 # @api public
@@ -17,9 +15,7 @@ class geoipupdate (
   String $license_key,
   String $edition_ids,
   String $package_ensure,
-  String $package_name = 'geoipupdate',
   String $conf_dir = '/usr/local/etc',
-  String $service_update_cmd,
   String $timer_oncalendar,
 ) {
   # Treating 'disable' same as 'absent' for simplicity
@@ -74,18 +70,39 @@ class geoipupdate (
     default    => true,
   }
 
-  # Pass 'correct' parameter to 'install' class
-  class { 'geoipupdate::install':
-    p_package_ensure  => $p_package_ensure,
+  # Add more checks for other distros
+  case $facts['os']['family'] {
+    'RedHat', 'Debian', 'Darwin': {
+      $p_package_name = 'geoipupdate'
+      $p_update_cmd   = '/usr/bin/dnf -y update geoipupdate'
+    }
+    'Debian': {
+      $p_package_name = 'geoipupdate'
+      $p_update_cmd = '/usr/bin/apt -y update geoipupdate'
+    }
+    default: {
+      notify { 'default':
+        message => $facts['os']['family'],
+      }
+      fail('Unsupported OS family. Submit an issue to the module owner.')
+    }
   }
-  # Pass 'correct' parameter to 'config' class
+
+  # Pass 'correct' parameters to 'install' class
+  class { 'geoipupdate::install':
+    p_package_ensure => $p_package_ensure,
+    p_package_name   => $p_package_name,
+  }
+  # Pass 'correct' parameters to 'config' class
   class { 'geoipupdate::config':
-    p_file_ensure     => $p_file_ensure,
+    p_file_ensure  => $p_file_ensure,
+    p_package_name => $p_package_name,
   }
   # Pass 'correct' parameters to 'service' class
   class { 'geoipupdate::service':
-    p_timer_ensure    => $p_timer_ensure,
     p_enable          => $p_enable,
+    p_update_cmd      => $p_update_cmd,
+    p_timer_ensure    => $p_timer_ensure,
     p_service_running => $p_service_running,
   }
 

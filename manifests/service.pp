@@ -1,16 +1,17 @@
 #
 # @summary Private class for configuring 'geoipupdate' systemd service & timer
 #
-# @service_update_cmd
 # @timer_oncalendar
-# @p_service_enable
+# @p_update_cmd
 # @p_timer_ensure
+# @p_enable
+# @p_service_running
 #
 # @api private
 #
 class geoipupdate::service (
-  String  $service_update_cmd = $geoipupdate::service_update_cmd,
   String  $timer_oncalendar   = $geoipupdate::timer_oncalendar,
+  String  $p_update_cmd       = undef,
   String  $p_timer_ensure     = undef,
   Boolean $p_enable           = undef,
   Boolean $p_service_running  = undef,
