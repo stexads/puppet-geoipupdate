@@ -1,6 +1,6 @@
 {
   "name": "stexads-geoipupdate",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "author": "stexads",
   "summary": "Installs, configures and manages the MaxMind geoipupdate client",
   "license": "Apache-2.0",
@@ -16,6 +16,20 @@
       "operatingsystemrelease": [
         "9",
         "10"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "12",
+        "13"
+      ]
+    },
+    {
+      "operatingsystem": "Darwin",
+      "operatingsystemrelease": [
+        "21",
+        "22"
       ]
     }
   ],

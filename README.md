@@ -40,6 +40,17 @@ This module depends on the following modules:
 - puppet-systemd
 - puppetlabs-stdlib
 
+### OS Requirements
+Supports `RedHat`, `Debian` and `MacOS`.
+
+Tested on:
+- RedHat 9
+- RedHat 10
+- Debian 13
+
+#### Debian
+Debian users need to enable the `contrib` repository component and
+refresh their local package index.
 
 # Usage
 ## Parameters
@@ -50,7 +61,7 @@ This module depends on the following modules:
 - conf_dir: The destination directory for MaxMind's config file `GeoIP.conf`
 - timer_oncalendar: Setting within the `*.timer` unit file that defines a specific date and time for triggering the client update
 
-Example usage:
+## Example usage:
 ```yaml
 Class nodes::mynode (
   String $version = '0.0.1'

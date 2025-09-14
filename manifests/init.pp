@@ -72,13 +72,17 @@ class geoipupdate (
 
   # Add more checks for other distros
   case $facts['os']['family'] {
-    'RedHat', 'Debian', 'Darwin': {
+    'RedHat': {
       $p_package_name = 'geoipupdate'
       $p_update_cmd   = '/usr/bin/dnf -y update geoipupdate'
     }
     'Debian': {
       $p_package_name = 'geoipupdate'
-      $p_update_cmd = '/usr/bin/apt -y update geoipupdate'
+      $p_update_cmd = '/usr/bin/apt -y install geoipupdate'
+    }
+    'Darwin': {
+      $p_package_name = 'geoipupdate'
+      $p_update_cmd = 'brew install geoipupdate'
     }
     default: {
       notify { 'default':
