@@ -8,7 +8,7 @@
    * [Requirements](#Requirements)
 1. [Usage - Configuration options and additional functionality](#Usage)
 1. [Limitations - OS compatibility, etc.](#Limitations)
-   * [Caveats](#Caveats)
+1. [Known Issues](#Known%20Issues)
 1. [Development - Guide for contributing to the module](#Development)
 1. [README - Check here for latest version](#README)
 
@@ -90,12 +90,10 @@ The `conf_dir` parameter is optional. If not set, it will default to `/etc`
 
 
 # Limitations
-The module only manages the `geoipupdate` client.
-It facilitaes the installation and the update of MaxMind's client `geoipupdate`.
-This is by design. It does not downlaod or manage `mmdb` files.
+It does not support all MaxMind's client parameters.
 
 
-## Caveats
+# Known Issues
 - If you change the location of the config file, the module does not remove/delete
 the old config file.
 - The module expects the `target_dir` to exist and be writable by the client.
