@@ -6,7 +6,6 @@ After=network.target
 
 [Service]
 Type=simple
-#RemainAfterExit=yes
 ExecStart=<%= @package_name %> -f <%= @conf_dir %>/GeoIP.conf -d <%= @target_dir %>
 
 [Install]

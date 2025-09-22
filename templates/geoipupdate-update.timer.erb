@@ -5,7 +5,6 @@ Wants=geoipupdate-update.service
 [Timer]
 Unit=geoipupdate-update.service
 OnCalendar=<%= @timer_oncalendar %>
-AccuracySec=1s
 
 [Install]
 WantedBy=timers.target
