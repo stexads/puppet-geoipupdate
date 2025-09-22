@@ -35,7 +35,7 @@ class geoipupdate (
 
   # presence_status expects
   # Enum['present', 'absent']
-  # while service_running expects
+  # while systemd timer enable/active expect
   # Enum['stopped', 'running', 'false', 'true' ]
   $_status = $presence_status ? {
     'absent' => false,
@@ -43,11 +43,7 @@ class geoipupdate (
   }
 
   systemd::timer { 'geoipupdate-update.timer':
-    # This ensures removal of systemd service and timer files when removing the package
-    # Enum['absent', 'file', 'present']
     ensure          => $presence_status,
-    # When active and enable are set to true the puppet service geoipupdate-update.timer will be declared, started and enabled
-    # Boolean
     enable          => $_status,
     active          => $_status,
     timer_content   => template("${module_name}/geoipupdate-update.timer.erb"),
