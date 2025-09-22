@@ -1,14 +1,13 @@
 # Service that updates MaxMind's 'geoipupdate' client
 
 [Unit]
-Description='geoipupdate' client update service
-Wants=geoipupdate-update.timer
+Description='geoipupdate' update service
 After=network.target
 
 [Service]
-Type=oneshot
-RemainAfterExit=yes
-ExecStart=<%= @p_update_cmd %>
+Type=simple
+#RemainAfterExit=yes
+ExecStart=<%= @package_name %> -f <%= @conf_dir %>/GeoIP.conf -d <%= @target_dir %>
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=network-online.target

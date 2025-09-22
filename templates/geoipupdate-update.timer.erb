@@ -1,11 +1,11 @@
 [Unit]
-Description=Timer required by geoipupdate-update.service.erb
+Description=Timer required by geoipupdate-update.service
 Wants=geoipupdate-update.service
 
 [Timer]
 Unit=geoipupdate-update.service
 OnCalendar=<%= @timer_oncalendar %>
-Persistent=true
+AccuracySec=1s
 
 [Install]
 WantedBy=timers.target

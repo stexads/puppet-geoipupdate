@@ -1,117 +1,57 @@
 #
 # @summary Public class for installing, configuring and managing MaxMind's 'geoipupdate' client
 #
+# @package_name
+# @presence_status
+# @conf_dir
+# @target_dir Note: module does not create the dir or test the existance or remove on module un-installation
 # @account_id
 # @license_key
 # @edition_ids
-# @package_ensure
-# @conf_dir
 # @timer_oncalendar
 #
 # @api public
 #
 class geoipupdate (
-  String $account_id,
-  String $license_key,
-  String $edition_ids,
-  String $package_ensure,
-  String $conf_dir = '/usr/local/etc',
-  String $timer_oncalendar,
+  String                      $package_name     = 'geoipupdate',
+  Enum[ "present", "absent" ] $presence_status,
+  String                      $conf_dir         = '/etc',
+  String                      $target_dir,
+  String                      $account_id,
+  String                      $license_key,
+  String                      $edition_ids,
+  String                      $timer_oncalendar,
 ) {
-  # Treating 'disable' same as 'absent' for simplicity
-  $p_package_ensure = $package_ensure ? {
-    'disabled' => 'absent',
-    default    => $package_ensure,
+
+  package { 'geoipupdate':
+    ensure => $presence_status,
+    name   => $package_name,
   }
 
-  # package_ensure expects
-  # Enum['present', 'absent', 'purged', 'disabled', 'installed', 'latest']
-  # while file_ensure expects
-  # Enum['present', 'absent', 'file', 'directory', 'link']
-  $p_file_ensure = $package_ensure ? {
-    'purged'    => 'absent',
-    'disabled'  => 'absent',
-    'installed' => 'present',
-    'latest'    => 'present',
-    default     => $package_ensure,
+  file { "${conf_dir}/GeoIP.conf":
+    ensure  => $presence_status,
+    content => template("${module_name}/GeoIP.conf.erb"),
   }
 
-  # package_ensure expects
-  # Enum['present', 'absent', 'purged', 'disabled', 'installed', 'latest']
-  # while file_ensure expects
-  # Enum['present', 'absent', 'file', 'directory', 'link']
-  $p_timer_ensure = $package_ensure ? {
-    'purged'    => 'absent',
-    'disabled'  => 'absent',
-    'installed' => 'present',
-    'latest'    => 'present',
-    default     => $package_ensure,
-  }
-
-  # package_ensure expects
-  # Enum['present', 'absent', 'purged', 'disabled', 'installed', 'latest']
-  # while service_enable expects
-  # Enum['stopped', 'running', 'false', 'true' ]
-  $p_enable = $package_ensure ? {
-    'absent'   => false,
-    'disabled' => false,
-    'purged'   => false,
-    default    => true,
-  }
-
-  # package_ensure expects
-  # Enum['present', 'absent', 'purged', 'disabled', 'installed', 'latest']
+  # presence_status expects
+  # Enum['present', 'absent']
   # while service_running expects
   # Enum['stopped', 'running', 'false', 'true' ]
-  $p_service_running = $package_ensure ? {
-    'absent'   => false,
-    'disabled' => false,
-    'purged'   => false,
-    default    => true,
+  $_status = $presence_status ? {
+    'absent' => false,
+    default  => true,
   }
 
-  # Add more checks for other distros
-  case $facts['os']['family'] {
-    'RedHat': {
-      $p_package_name = 'geoipupdate'
-      $p_update_cmd   = '/usr/bin/dnf -y update geoipupdate'
-    }
-    'Debian': {
-      $p_package_name = 'geoipupdate'
-      $p_update_cmd = '/usr/bin/apt -y install geoipupdate'
-    }
-    'Darwin': {
-      $p_package_name = 'geoipupdate'
-      $p_update_cmd = 'brew install geoipupdate'
-    }
-    default: {
-      notify { 'default':
-        message => $facts['os']['family'],
-      }
-      fail('Unsupported OS family. Submit an issue to the module owner.')
-    }
+  systemd::timer { 'geoipupdate-update.timer':
+    # This ensures removal of systemd service and timer files when removing the package
+    # Enum['absent', 'file', 'present']
+    ensure          => $presence_status,
+    # When active and enable are set to true the puppet service geoipupdate-update.timer will be declared, started and enabled
+    # Boolean
+    enable          => $_status,
+    active          => $_status,
+    timer_content   => template("${module_name}/geoipupdate-update.timer.erb"),
+    service_content => template("${module_name}/geoipupdate-update.service.erb"),
   }
-
-  # Pass 'correct' parameters to 'install' class
-  class { 'geoipupdate::install':
-    p_package_ensure => $p_package_ensure,
-    p_package_name   => $p_package_name,
-  }
-  # Pass 'correct' parameters to 'config' class
-  class { 'geoipupdate::config':
-    p_file_ensure  => $p_file_ensure,
-    p_package_name => $p_package_name,
-  }
-  # Pass 'correct' parameters to 'service' class
-  class { 'geoipupdate::service':
-    p_enable          => $p_enable,
-    p_update_cmd      => $p_update_cmd,
-    p_timer_ensure    => $p_timer_ensure,
-    p_service_running => $p_service_running,
-  }
-
-  Class['geoipupdate::install']
-  -> Class['geoipupdate::config']
-  -> Class['geoipupdate::service']
 
 }
