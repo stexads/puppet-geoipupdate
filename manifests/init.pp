@@ -9,15 +9,21 @@
 # @param timer_oncalendar Defines timer triggerring of geoipupdate client calls
 # @param package_name Defaults to 'geoipupdate', which should not need to be overriden
 # @param conf_dir Directory where the configuration file `GeoIP.conf` will be written
+# @param preserve_timestamps Whether to preserve modification times of files downloaded from the server
+# @param verbose Enable/disable verbose mode
+# @param parallelism The maximum number of parallel database downloads
 class geoipupdate (
   Enum['present', 'absent'] $presence_status,
   String                    $target_dir,
   String                    $account_id,
   String                    $license_key,
   String                    $edition_ids,
-  String                    $timer_oncalendar,
-  String                    $package_name     = 'geoipupdate',
-  String                    $conf_dir         = '/etc',
+  String                    $package_name        = 'geoipupdate',
+  String                    $timer_oncalendar    = 'daily',
+  String                    $conf_dir            = '/etc',
+  Boolean                   $preserve_timestamps = true,
+  Boolean                   $verbose             = false,
+  Integer                   $parallelism         = 1,
 ) {
   package { 'geoipupdate':
     ensure => $presence_status,

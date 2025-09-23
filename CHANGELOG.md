@@ -1,26 +1,34 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+Notable changes to this project will be documented in this file.
+
+
+## Release 0.9.8
+**Features**
+- Added support for `preserve_timestamps` config file parameter
+- Added support for `parallelism` config file parameter
+- Added support for `verbose` client parameter
+
+**Bugfixes**
+
+
+**Known Issues**
+- The module expects the `target_dir` to exist and be writable by the client.
+- It does not yet support all MaxMind's client parameters and config options.
+- It only supports systemd timer `OnCalendar` option.
 
 
 ## Release 0.9.7
 **Features**
+- Introduced `mmdb` database downloads via systemd service
 
 **Bugfixes**
-
 - major code refactoring and simplified things
 
 **Known Issues**
 - The module expects the `target_dir` to exist and be writable by the client.
 - It does not support all MaxMind's client parameters.
-- If you change the location of the config file, the module does not remove/delete
-the old config file.
 
 
-## Release 0.9.1
-
-**Features**
-
-**Bugfixes**
-
-**Known Issues**
+## Releases 0.9.1 to 0.9.6
+Best to avoid!

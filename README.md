@@ -54,48 +54,71 @@ refresh their local package index.
 
 # Usage
 ## Parameters
-- package_name: defaults to `geoipupdate`
 - presence_status: (possible values: "present" or "absent") Instructs the module to either install or remove the client
+- target_dir: Destination directory where `geoipupdate` client saves the `mmdb` files
 - account_id: Your MaxMind's account ID
 - license_key: Your MaxMind's License Key
 - edition_ids: The mmdb file list
-- conf_dir: The destination directory for MaxMind's config file `GeoIP.conf`
-- target_dir: destination directory where `geoipupdate` client saves the `mmdb` files
 - timer_oncalendar: Setting within the `*.timer` unit file that defines a specific date and time for triggering the client update
+- package_name: defaults to `geoipupdate`
+- conf_dir: The destination directory for MaxMind's config file `GeoIP.conf`
+- preserve_timestamps: Whether to preserve modification times of files downloaded from the MM server
+- verbose: Display version information
+- parallelism: Set the number of parallel database downloads
+
+
+### Default parameter values
+- `package_name`: `geoipupdate`
+- `timer_oncalendar`: `daily`
+- `conf_dir`: `etc`
+- `preserve_timestamps`: `true`
+- `verbose`: `false`
+- `parallelism`: `1`
+
 
 ## Example usage:
 ```yaml
 Class nodes::mynode (
   String $version = '0.0.1'
 ) {
-   # Using hiera
-#  include geoipupdate
+  # Using hiera
+  #include geoipupdate
 
   class { 'geoipupdate':
-    package_name       => 'geoipupdate',                                                                                                                                      
-    presence_status    => 'present', # Enum [ "present", "absent" ]                                                                                                           
-    account_id         => 'test',                                                                                                                                             
-    license_key        => 'testKey',                                                                                                                                          
-    edition_ids        => 'GeoIP2-Country GeoIP2-City GeoIP2-ISP',                                                                                                            
-    conf_dir           => '/etc',                                                                                                                                             
-    target_dir         => '/tmp/geoip',                                                                                                                                       
-    timer_oncalendar   => '*-*-* *:00:*',
+    presence_status     => 'present', # Enum [ "present", "absent" ]
+    target_dir          => '/tmp/geoip',
+    account_id          => 'test',
+    license_key         => 'testKey',
+    edition_ids         => 'GeoIP2-Country GeoIP2-City GeoIP2-ISP',
+    timer_oncalendar    => '*-*-* *:00:*',
+    package_name        => 'geoipupdate',
+    conf_dir            => '/etc',
+    preserve_timestamps => true,
+    verbose             => true,
+    parallelism         => 1,
   }
-
 }
 ```
 
-## Note
-The `conf_dir` parameter is optional. If not set, it will default to `/etc`
-
-
 # Limitations
-It does not support all MaxMind's client parameters.
+It only supports systemd `OnCalendar` itimer option.
 
+It does not support all MaxMind's client optional parameters and config options.
+Namely it does not yet support following config file options:
+- `Host`
+- `Proxy`
+- `ProxyUserPassword`
+- `LockFile`
+- `RetryFor`
+
+And it does not yet support following client options:
+- `--stack-trace`
+- `--output`
+
+## Other
+This is a limitation of MaxMind's client: CSV databases are not supported.
 
 # Known Issues
-- If you change the location of the config file, the module does not remove/delete
-the old config file.
 - The module expects the `target_dir` to exist and be writable by the client.
 
 # Development

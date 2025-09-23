@@ -15,3 +15,9 @@ EditionIDs <%= @edition_ids %>
 
 # Install databases to a custom directory
 DatabaseDirectory <%= @target_dir %>
+
+# Whether to preserve modification times of files downloaded from the server
+PreserveFileTimes <% if @preserve_timestamps %>1<% else %>0<% end %>
+
+# The maximum number of parallel database downloads
+Parallelism <%= @parallelism %>
