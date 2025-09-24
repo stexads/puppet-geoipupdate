@@ -5,7 +5,8 @@
 1. [Module Description - What the module does and why it is useful](#Module-description)
 1. [Setup - The basics of getting started with puppet-geoipupdate](#Setup)
    * [What puppet-geoipupdate affects](#What-puppet-geoipupdate-affects)
-   * [Requirements](#Requirements)
+   * [Dependencies](Dependencies)
+   * [OS Requirements](#OS-Requirements)
 1. [Usage - Configuration options and additional functionality](#Usage)
    * [Parameters](#Parameters)
    * [Example usage](#Example-usage)
@@ -40,12 +41,14 @@ geoipupdate-update.service
 geoipupdate-update.timer
 ```
 
-## Requirements
-This module depends on the following modules:
-- puppet-systemd
-- puppetlabs-stdlib
+And best of all, it will download `mmdb` files in `target_dir`.
 
-### OS Requirements
+## Dependencies
+This module depends on the following modules:
+- puppet-systemd (>= 9.0.0)
+- puppetlabs-stdlib (>= 9.7.0)
+
+## OS Requirements
 Tested on:
 - RedHat 9
 - RedHat 10
