@@ -46,7 +46,6 @@ And best of all, it will download `mmdb` files in `target_dir`.
 ## Dependencies
 This module depends on the following modules:
 - puppet-systemd (>= 9.0.0)
-- puppetlabs-stdlib (>= 9.7.0)
 
 ## OS Requirements
 Tested on:
