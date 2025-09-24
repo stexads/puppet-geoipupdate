@@ -2,13 +2,16 @@
 
 
 #### Table of Contents
-1. [Module Description - What the module does and why it is useful](#Module%20description)
+1. [Module Description - What the module does and why it is useful](#Module-description)
 1. [Setup - The basics of getting started with puppet-geoipupdate](#Setup)
    * [What puppet-geoipupdate affects](#What-puppet-geoipupdate-affects)
    * [Requirements](#Requirements)
 1. [Usage - Configuration options and additional functionality](#Usage)
+   * [Parameters](Parameters)
+   * [Example usage](Example-usage)
 1. [Limitations - OS compatibility, etc.](#Limitations)
-1. [Known Issues](#Known%20Issues)
+   * [Other](Other)
+1. [Known Issues](#Known-Issues)
 1. [Development - Guide for contributing to the module](#Development)
 1. [README - Check here for latest version](#README)
 
@@ -76,7 +79,7 @@ refresh their local package index.
 - `parallelism`: `1`
 
 
-## Example usage:
+## Example usage
 ```yaml
 Class nodes::mynode (
   String $version = '0.0.1'
