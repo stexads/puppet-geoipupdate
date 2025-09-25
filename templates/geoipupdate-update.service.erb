@@ -7,6 +7,7 @@ After=network.target
 [Service]
 Type=simple
 ExecStart=<%= @package_name %><% if @verbose %> -v<% end %> -f <%= @conf_dir %>/GeoIP.conf
+User=<%= @user %>
 
 [Install]
 WantedBy=network-online.target

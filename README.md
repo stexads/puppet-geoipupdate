@@ -44,6 +44,8 @@ geoipupdate-update.timer
 And best of all, it will download `mmdb` files in `target_dir`.
 
 ## Dependencies
+>Note: This module only supports MaxMind's client version >= 2.5.0.
+
 This module depends on the following modules:
 - puppet-systemd (>= 9.0.0)
 
@@ -64,8 +66,9 @@ refresh their local package index.
 - account_id: Your MaxMind's account ID
 - license_key: Your MaxMind's License Key
 - edition_ids: The mmdb file list
-- timer_oncalendar: Setting within the `*.timer` unit file that defines a specific date and time for triggering the client update
+- user: Set the UNIX user that the geoipupdate client process is executed as
 - package_name: defaults to `geoipupdate`
+- timer_oncalendar: Setting within the `*.timer` unit file that defines a specific date and time for triggering the client update
 - conf_dir: The destination directory for MaxMind's config file `GeoIP.conf`
 - preserve_timestamps: Whether to preserve modification times of files downloaded from the MM server
 - verbose: Display version information
@@ -73,6 +76,7 @@ refresh their local package index.
 
 
 ### Default parameter values
+- `user`: `root`
 - `package_name`: `geoipupdate`
 - `timer_oncalendar`: `daily`
 - `conf_dir`: `etc`
@@ -86,22 +90,36 @@ refresh their local package index.
 Class nodes::mynode (
   String $version = '0.0.1'
 ) {
-  # Using hiera
-  #include geoipupdate
+  $desst_dir = '/tmp/geoip'
 
-  class { 'geoipupdate':
+  file { "${dest_dir}":
+    ensure  => 'directory',
+    owner   => 'my_user',
+    group   => 'my_group',
+    mode    => '0755',
+  }
+  -> class { 'geoipupdate':
     presence_status     => 'present', # Enum [ "present", "absent" ]
-    target_dir          => '/tmp/geoip',
+    target_dir          => "${dest_dir}",
     account_id          => 'test',
     license_key         => 'testKey',
     edition_ids         => 'GeoIP2-Country GeoIP2-City GeoIP2-ISP',
-    timer_oncalendar    => '*-*-* *:00:*',
+    user                =>  'my_username',
     package_name        => 'geoipupdate',
+    timer_oncalendar    => '*-*-* *:00:*',
     conf_dir            => '/etc',
     preserve_timestamps => true,
     verbose             => true,
     parallelism         => 1,
   }
+  # Or, using hiera:
+  #file { '/tmp/geoip'}":
+  #  ensure  => 'directory',
+  #  owner   => 'my_user',
+  #  group   => 'my_group',
+  #  mode    => '0755',
+  #}
+  #-> include geoipupdate
 }
 ```
 
@@ -124,7 +142,10 @@ And it does not yet support following client options:
 This is a limitation of MaxMind's client: CSV databases are not supported.
 
 # Known Issues
+- The module only supports MaxMind's client version >=2.5.0
+- It does not yet support all MaxMind's client parameters and config options.
 - The module expects the `target_dir` to exist and be writable by the client.
+- It only supports systemd timer `OnCalendar` option.
 
 # Development
 Source code available at [GitHub](https://github.com/stexads/puppet-geoipupdate).
