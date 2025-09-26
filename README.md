@@ -141,6 +141,9 @@ And it does not yet support following client options:
 ## Other
 This is a limitation of MaxMind's client: CSV databases are not supported.
 
+This module installs the client package available on the system and does not
+validate, check or enforce specific versions.
+
 # Known Issues
 - The module only supports MaxMind's client version >=2.5.0
 - It does not yet support all MaxMind's client parameters and config options.
