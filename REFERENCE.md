@@ -4,3 +4,116 @@
 
 ## Table of Contents
 
+### Classes
+
+* [`geoipupdate`](#geoipupdate): Main class for installing, configuring and managing MaxMind's 'geoipupdate' client
+
+## Classes
+
+### <a name="geoipupdate"></a>`geoipupdate`
+
+Main class for installing, configuring and managing MaxMind's 'geoipupdate' client
+
+#### Parameters
+
+The following parameters are available in the `geoipupdate` class:
+
+* [`presence_status`](#-geoipupdate--presence_status)
+* [`target_dir`](#-geoipupdate--target_dir)
+* [`account_id`](#-geoipupdate--account_id)
+* [`license_key`](#-geoipupdate--license_key)
+* [`edition_ids`](#-geoipupdate--edition_ids)
+* [`user`](#-geoipupdate--user)
+* [`package_name`](#-geoipupdate--package_name)
+* [`timer_oncalendar`](#-geoipupdate--timer_oncalendar)
+* [`conf_dir`](#-geoipupdate--conf_dir)
+* [`preserve_timestamps`](#-geoipupdate--preserve_timestamps)
+* [`verbose`](#-geoipupdate--verbose)
+* [`parallelism`](#-geoipupdate--parallelism)
+
+##### <a name="-geoipupdate--presence_status"></a>`presence_status`
+
+Data type: `Enum['present', 'absent']`
+
+Installation value to be either: 'present' or 'absent'
+
+##### <a name="-geoipupdate--target_dir"></a>`target_dir`
+
+Data type: `String`
+
+Note: module does not create the dir or test the existance or remove on module un-installation
+
+##### <a name="-geoipupdate--account_id"></a>`account_id`
+
+Data type: `String`
+
+Your MaxMind account ID
+
+##### <a name="-geoipupdate--license_key"></a>`license_key`
+
+Data type: `String`
+
+Your MaxMind License Key
+
+##### <a name="-geoipupdate--edition_ids"></a>`edition_ids`
+
+Data type: `String`
+
+Your MaxMind files to download
+
+##### <a name="-geoipupdate--user"></a>`user`
+
+Data type: `String`
+
+Set the UNIX user that the geoipupdate client process is executed as
+
+Default value: `'root'`
+
+##### <a name="-geoipupdate--package_name"></a>`package_name`
+
+Data type: `String`
+
+Defaults to 'geoipupdate', which should not need to be overriden
+
+Default value: `'geoipupdate'`
+
+##### <a name="-geoipupdate--timer_oncalendar"></a>`timer_oncalendar`
+
+Data type: `String`
+
+Defines timer triggerring of geoipupdate client calls
+
+Default value: `'daily'`
+
+##### <a name="-geoipupdate--conf_dir"></a>`conf_dir`
+
+Data type: `String`
+
+Directory where the configuration file `GeoIP.conf` will be written
+
+Default value: `'/etc'`
+
+##### <a name="-geoipupdate--preserve_timestamps"></a>`preserve_timestamps`
+
+Data type: `Boolean`
+
+Whether to preserve modification times of files downloaded from the server
+
+Default value: `true`
+
+##### <a name="-geoipupdate--verbose"></a>`verbose`
+
+Data type: `Boolean`
+
+Enable/disable verbose mode
+
+Default value: `false`
+
+##### <a name="-geoipupdate--parallelism"></a>`parallelism`
+
+Data type: `Integer`
+
+The maximum number of parallel database downloads
+
+Default value: `1`
+
